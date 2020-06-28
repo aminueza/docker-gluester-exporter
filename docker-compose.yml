@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+    server1:
+        build:
+            dockerfile: Dockerfile
+            context: .
+        hostname: server1
+        container_name: server1
+        privileged: true
+        environment:
+            CGROUP_PIDS_MAX: 0
+            PROM_HOSTNAME_PORT: "0.0.0.0:5555"
+            PROM_VOLUMES: "_all"
+            PROM_PROFILE: "false"
+            PROM_QUOTA: "true"
+        ports:
+            - 5555:5555
+        volumes:
+            - lvm1:/run/lvm
+            - glusterd1:/var/lib/glusterd
+            - brick1:/data/brick
+        depends_on:
+            - server2
+    server2:
+        image: gluster/gluster-centos
+        hostname: server2
+        container_name: server2
+        privileged: true
+        environment:
+            CGROUP_PIDS_MAX: 0
+        volumes:
+            - lvm2:/run/lvm
+            - glusterd2:/var/lib/glusterd
+            - brick2:/data/brick
+    server3:
+        image: gluster/gluster-centos
+        hostname: server3
+        container_name: server3
+        privileged: true
+        environment:
+            CGROUP_PIDS_MAX: 0
+        volumes:
+            - lvm3:/run/lvm
+            - glusterd3:/var/lib/glusterd
+            - brick3:/data/brick
+
+      
+volumes:
+    glusterd1:
+    glusterd2:
+    glusterd3:
+    brick1:
+    brick2:
+    brick3:
+    lvm1:
+    lvm2:
+    lvm3:
