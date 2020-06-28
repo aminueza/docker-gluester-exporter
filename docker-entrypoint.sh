@@ -5,8 +5,8 @@
 
 sleep 2s
 
-echo "Run docker-gluster-exporter"
+echo "Run docker-gluster-prometheus"
 
-/usr/bin/docker-gluester-exporter
+/usr/bin/docker-gluster-prometheus
 
 sleep inf

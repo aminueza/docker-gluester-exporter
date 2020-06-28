@@ -6,18 +6,18 @@ ENV GO111MODULE on
 ENV GIT_TERMINAL_PROMPT=1
 ENV GIT_SSL_NO_VERIFY=true
 
-WORKDIR $GOPATH/src/github.com/aminueza/docker-gluster-exporter
+WORKDIR $GOPATH/src/github.com/aminueza/docker-gluster-prometheus
 
 COPY . .
 
 RUN  \
      apk add --update --no-cache git && \
-     go build . && cp docker-gluester-exporter /go/bin/docker-gluester-exporter
+     go build . && cp docker-gluster-prometheus /go/bin/docker-gluster-prometheus
 
 
 FROM gluster/gluster-centos
 
-COPY --from=0 /go/bin/docker-gluester-exporter /usr/bin/docker-gluester-exporter
+COPY --from=0 /go/bin/docker-gluster-prometheus /usr/bin/docker-gluster-prometheus
 
 WORKDIR /app
 
